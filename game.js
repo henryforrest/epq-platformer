@@ -126,6 +126,10 @@ const LEVELS = [
 
 // ---------- Scenes ----------
 
+// Static screens keep the default camera every frame, so their text stays put if the window
+// is resized (the level scene moves the camera itself).
+const keepDefaultCamera = () => action(() => camPos(width() / 2, height() / 2));
+
 // One scene handles every level; n is the 1-based level number.
 scene('level', (n) => {
   const cfg = LEVELS[n - 1];
@@ -210,6 +214,7 @@ scene('level', (n) => {
 });
 
 scene('main', () => {
+  keepDefaultCamera();
   const lines = [
     'Welcome to my game, use A&D to move and space to jump',
     'Make it to the finish line to get to the next level',
@@ -226,6 +231,7 @@ scene('main', () => {
 
 // Shared game-over screen; n is the level to retry.
 scene('lose', (n) => {
+  keepDefaultCamera();
   const cx = width() / 2;
   const cy = height() / 2;
   add([text('GAME OVER'), pos(cx, cy - 20), origin('center')]);
@@ -237,6 +243,7 @@ scene('lose', (n) => {
 });
 
 scene('end', () => {
+  keepDefaultCamera();
   const cx = width() / 2;
   const cy = height() / 2;
   add([text('CONGRATULATIONS YOU COMPLETED THE GAME'), pos(cx, cy), origin('center')]);
